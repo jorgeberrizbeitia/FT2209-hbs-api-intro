@@ -6,6 +6,8 @@ const port = process.env.PORT
 // sección de middlewares => ejecuciones en todas las llamadas, antes de las rutas
 app.set('view engine', 'hbs');
 app.set("views", __dirname + "/views/")
+const hbs = require("hbs")
+hbs.registerPartials(__dirname + "/views/partials")
 
 // data a utilizar
 const allLessons = require("./data/somedata.js") // local
@@ -123,6 +125,23 @@ app.get("/list", (req, res) => {
 
 })
 
+app.get("/dogs-by-breed/:breed", (req, res) => {
+
+  const { breed } = req.params // lo mismo que usar req.params.breed
+  console.log(breed)
+
+  myDog.getAllDogsByBreed(breed)
+  .then((response) => {
+    console.log(response)
+    res.render("all-dogs.hbs", {
+      dogList: response.message
+    })
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

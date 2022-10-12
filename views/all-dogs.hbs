@@ -1,0 +1,17 @@
+
+<div>
+
+  <h3>Todos los perritos por raza</h3>
+
+  {{#each dogList}}
+
+      {{!-- <div>
+        <h3>El mejor perrito del mundo</h3>
+        <img src="{{this}}" alt="perrito" width="300px">
+        <p>rating: 10/10</p>
+      </div> --}}
+      {{>dogcard this}}
+
+  {{/each}}
+
+</div>

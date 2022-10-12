@@ -6,7 +6,10 @@
 
     {{#each breedsArr}}
 
-        <li>{{this}}</li>
+        {{!-- <li>{{this}}</li> --}}
+        <li>
+          <a href="/dogs-by-breed/{{this}}">{{this}}</a>
+        </li>
 
     {{/each}}
 
