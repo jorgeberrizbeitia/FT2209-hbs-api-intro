@@ -1,0 +1,20 @@
+<div>
+  <h3>Estas son todas nuestras lecciones</h3>
+
+  <p>... aqui iran las lecciones</p>
+  {{!-- {{allLessons.0.topic}} --}}
+  {{!-- allLessons[0].topic --}}
+
+  <ol>
+
+  {{#each allLessons}}
+
+    <li>Tema: {{this.topic}}</li>
+    {{!-- <li>Tema: {{topic}}</li> --}}
+
+  {{/each}}
+
+  </ol>
+
+
+</div>
