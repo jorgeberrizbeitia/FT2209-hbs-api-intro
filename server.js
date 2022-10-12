@@ -8,7 +8,9 @@ app.set('view engine', 'hbs');
 app.set("views", __dirname + "/views/")
 
 // data a utilizar
-const allLessons = require("./data/somedata.js")
+const allLessons = require("./data/somedata.js") // local
+const DogApi = require('doggo-api-wrapper'); // de API
+const myDog = new DogApi();
 
 app.get('/', (req, res) => {
   console.log(process.env.SECRET_WORD)
@@ -63,7 +65,7 @@ app.get("/lessons-approved", (req, res) => {
 
 // ruta que muestre las lecciones por bootcamp
 app.get("/lessons/:bootcamp", (req, res) => {
-
+  console.log(req.params.bootcamp)
   let { bootcamp } = req.params // destructurando la propiedad bootcamp de el obj req.params
 
   let bootcampArr = allLessons.filter((eachLesson) => {
@@ -71,12 +73,53 @@ app.get("/lessons/:bootcamp", (req, res) => {
   })
   console.log(bootcampArr)
 
+  let dataToSend = {
+    bootcampName: bootcamp,
+    bootcampArr: bootcampArr
+  }
+
   // if (bootcamp === "web") {
-    res.render("lessons-bootcamp.hbs", {
-      bootcampName: bootcamp,
-      bootcampArr: bootcampArr
-    })
+    res.render("lessons-bootcamp.hbs", dataToSend)
   // } 
+
+})
+
+
+// RUTAS DE PERRITOS
+// ruta para ver imagen de un perrito aleatorio
+app.get("/dog", (req, res) => {
+
+  myDog.getARandomDog() // esta API está en Finlandia
+  .then(data => {
+    console.log(data)
+    res.render("random-dog.hbs", {
+      dogImage: data.message
+    })
+  })
+  .catch(err => console.error(err))
+
+})
+
+// ruta para listar las razas de perritos
+app.get("/list", (req, res) => {
+
+  myDog.getListOfAllBreeds()
+  .then((response) => {
+    console.log(response)
+    // [
+    //   "affenpinscher",
+    //   "african",
+    //   "airedale"
+    // ]
+    let breedsArr = Object.keys(response.message)
+    console.log(breedsArr)
+    res.render("breeds.hbs", {
+      breedsArr: breedsArr
+    })
+  })
+  .catch((error) => {
+    console.log(error)
+  })
 
 })
 
