@@ -3,9 +3,11 @@
   <p>...</p>
 
   <ul>
-    {{#each approvedLesson}}
+    {{#each allLessons}}
 
+      {{#if this.approved}}
       <li>Elemento 1: {{this.topic}}. {{this.description}}</li>
+      {{/if}}
 
     {{/each}}
 

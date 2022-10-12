@@ -42,20 +42,44 @@ app.get("/random-lesson", (req, res) => {
 // ruta que muestre solo las lecciones aprobadas
 app.get("/lessons-approved", (req, res) => {
 
-  let approvedLesson = []
-  for (let i = 0; i < allLessons.length; i++) {
-    if (allLessons[i].approved === true) {
-      approvedLesson.push(allLessons[i])
-    }
-  }
+  // let approvedLesson = []
+  // for (let i = 0; i < allLessons.length; i++) {
+  //   if (allLessons[i].approved === true) {
+  //     approvedLesson.push(allLessons[i])
+  //   }
+  // }
+
+  // * con filter
+  // let approvedLesson = allLessons.filter((eachLesson) => {
+  //   return eachLesson.approved === true
+  // })
 
   res.render("approved-lessons.hbs", {
-    approvedLesson: approvedLesson
+    // approvedLesson: approvedLesson
+    allLessons: allLessons
   })
 
 })
 
 // ruta que muestre las lecciones por bootcamp
+app.get("/lessons/:bootcamp", (req, res) => {
+
+  let { bootcamp } = req.params // destructurando la propiedad bootcamp de el obj req.params
+
+  let bootcampArr = allLessons.filter((eachLesson) => {
+    return eachLesson.bootcamp === bootcamp
+  })
+  console.log(bootcampArr)
+
+  // if (bootcamp === "web") {
+    res.render("lessons-bootcamp.hbs", {
+      bootcampName: bootcamp,
+      bootcampArr: bootcampArr
+    })
+  // } 
+
+})
+
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
