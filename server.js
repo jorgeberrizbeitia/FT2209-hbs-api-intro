@@ -40,6 +40,21 @@ app.get("/random-lesson", (req, res) => {
 })
 
 // ruta que muestre solo las lecciones aprobadas
+app.get("/lessons-approved", (req, res) => {
+
+  let approvedLesson = []
+  for (let i = 0; i < allLessons.length; i++) {
+    if (allLessons[i].approved === true) {
+      approvedLesson.push(allLessons[i])
+    }
+  }
+
+  res.render("approved-lessons.hbs", {
+    approvedLesson: approvedLesson
+  })
+
+})
+
 // ruta que muestre las lecciones por bootcamp
 
 app.listen(port, () => {
